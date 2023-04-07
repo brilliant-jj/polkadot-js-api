@@ -1,0 +1,21 @@
+
+const { ApiPromise, WsProvider } = require('@polkadot/api');
+async function main() {
+    const wsProvider = new WsProvider('wss://kusama-rpc.polkadot.io');
+    const api = await ApiPromise.create({ provider: wsProvider });
+
+    // 订阅事件
+    api.query.system.events((events) => {
+        events.forEach((record) => {
+            console.log(record.event.data.toString());
+        });
+    });
+}
+
+main().catch((err) => {
+    console.error(err);
+    process.exit(-1);
+});
+
+#此程序将连接到 Polkadot Kusama 节点并打印出事件数据
+#可以根据需要更改节点和订阅的事
